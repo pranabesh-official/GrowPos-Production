@@ -181,6 +181,7 @@ const loadWindow = function (appPort, loadingWin, appRoot) {
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
+            webSecurity:false,
         }
     });
     window.loadURL(`file://${path.join(__dirname, './app/index.html')}`);
