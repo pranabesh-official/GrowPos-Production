@@ -8,7 +8,11 @@ const join = path.join;
 const spawn = require('child_process').spawn;
 const shell = require('shelljs');
 const http = require('http');
+const express = require("express");
+const userInterface = express();
+const fs = require("fs");
 if (require('electron-squirrel-startup')) return app.quit();
+
 // const NativeImage = require('electron').nativeImage;
 // require('dotenv').config()
 
@@ -19,6 +23,7 @@ let startNodeServer = 0
 const createWindow = function () {
     console.log(logTag, 'trying to start Nosqlclient electron application');
     const appRoot = path.resolve(__dirname);
+    const dbRoot = path.resolve(__dirname, 'C:/');
     const loadingPage = join('file://', appRoot, './loading/loading.html');
     // const checkInternetConnected = require('check-internet-connected');
     require('dns').resolve('www.google.com', function (err) {
@@ -38,7 +43,7 @@ const createWindow = function () {
         minHeight: 200,
         maxWidth: 200,
         maxHeight: 200,
-        icon:path.join(__dirname, './assets/favicon.ico'),
+        icon: path.join(__dirname, './assets/favicon.ico'),
         show: false,
         frame: false,
         transparent: true,
@@ -54,12 +59,12 @@ const createWindow = function () {
     //fix tunnel-ssh
     shell.cp('-R', join(appRoot, 'app', '/programs/server/npm/node_modules/tunnel-ssh'), join(appRoot, 'app', 'programs/server/npm/node_modules/meteor/modules-runtime/node_modules/'));
 
-    beginStartingMongo(appRoot, win);
+    beginStartingMongo(appRoot, win, dbRoot);
 };
 
-const beginStartingMongo = function (appRoot, loadingWin) {
+const beginStartingMongo = function (appRoot, loadingWin, dbRoot) {
     console.log(logTag, 'trying to start mongod process');
-    let path = join(appRoot, 'bin', 'mongod');
+    let path = join(dbRoot, 'bin', 'mongod');
     if (process.platform === 'win32') {
         path += '.exe';
     }
@@ -139,7 +144,6 @@ const startNode = function (appRoot, mongoPort, loadingWin) {
 
 const waitUntilMeteorGetsReady = function (port, loadingWin) {
     let fired = false;
-
     http.get('http://localhost:4545/', function () {
         if (!fired) {
             fired = true;
@@ -168,7 +172,19 @@ const freeport = function (start, done) {
 };
 
 const loadWindow = function (appPort, loadingWin, appRoot) {
-    console.log(appPort)
+    const PUBLIC_PATH = path.resolve(__dirname, "app");
+    const PORT = parseInt(process.env.PORT || "4141", 10)
+    const PUBLIC_URL = process.env.PUBLIC_URL || `http://localhost:${PORT}`;
+    const indexHtml = path.join(PUBLIC_PATH, "index.html");
+    const indexHtmlContent = fs
+      .readFileSync(indexHtml, "utf-8")
+      .replace(/__PUBLIC_URL_PLACEHOLDER__/g, PUBLIC_URL);
+    
+    userInterface.get("/", (req, res) => {
+      res.send(indexHtmlContent);
+    });
+    userInterface.use(express.static(path.join(PUBLIC_PATH))); 
+    userInterface.listen(PORT);
     const window = new BrowserWindow({
         width: 1000,
         height: 700,
@@ -176,23 +192,26 @@ const loadWindow = function (appPort, loadingWin, appRoot) {
         minHeight: 680,
         show: false,
         frame: false,
-        icon:path.join(__dirname, './assets/favicon.ico'),
+        icon: path.join(__dirname, './assets/favicon.ico'),
         titleBarStyle: 'hidden',
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
-            webSecurity:false,
+            webSecurity: false,
         }
     });
-    window.loadURL(`file://${path.join(__dirname, './app/index.html')}`);
-    // window.loadURL(`http://localhost:4545/`);
-    
+
+    // window.loadURL(`file://${path.join(__dirname, './app/index.html')}`);
+    window.loadURL(`http://localhost:${4141}/`);
+
     window.webContents.once('dom-ready', () => {
         console.log('main loaded')
         loadingWin.close();
         window.show()
 
     })
+
+
 };
 
 // app.on('ready', createWindow);
