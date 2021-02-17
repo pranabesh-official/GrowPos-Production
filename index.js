@@ -11,7 +11,7 @@ const http = require('http');
 const express = require("express");
 const userInterface = express();
 const fs = require("fs");
-if (require('electron-squirrel-startup')) return app.quit();
+const isDev = require("electron-is-dev")
 
 // const NativeImage = require('electron').nativeImage;
 // require('dotenv').config()
@@ -22,8 +22,13 @@ let startNodeServer = 0
 
 const createWindow = function () {
     console.log(logTag, 'trying to start Nosqlclient electron application');
+    let dbRoot
     const appRoot = path.resolve(__dirname);
-    const dbRoot = path.resolve(__dirname, 'C:/');
+    if(isDev){
+        dbRoot = path.resolve(__dirname, './extraResources/');
+    }else{
+        dbRoot = path.resolve(__dirname, '../extraResources/');
+    }
     const loadingPage = join('file://', appRoot, './loading/loading.html');
     // const checkInternetConnected = require('check-internet-connected');
     require('dns').resolve('www.google.com', function (err) {
