@@ -1,6 +1,6 @@
 {
   "name": "growpos-desktop",
-  "productName":"Growpos",
+  "productName": "Growpos",
   "version": "0.0.1",
   "author": "spiderwave",
   "description": "pos billing app",
@@ -30,6 +30,7 @@
     "cors": "^2.8.5",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
+    "electron-builder": "^22.9.1",
     "electron-is-dev": "^1.2.0",
     "electron-pos-printer": "^1.2.4",
     "electron-serve": "^1.1.0",
