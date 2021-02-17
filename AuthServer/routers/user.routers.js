@@ -113,6 +113,7 @@ router.patch('/users/:id',auth, async (req, res) => {
                     Haier_Date: req.body.Haier_Date,
                     admin: req.body.admin,
                     Salary: req.body.Salary,
+                    navigation:req.body.navigation
 
                 }
             }

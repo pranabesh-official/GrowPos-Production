@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 // const validator = require('validator')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { array } = require('prop-types');
 
 const userSchema = new mongoose.Schema({
     EmpolyeName: {
@@ -70,9 +71,18 @@ const userSchema = new mongoose.Schema({
         required:true,
         trim: true
     },
+    globalid: {
+        type:String,
+        trim: true
+    },
     avatar:{
         type:Buffer
+    },
+    navigation:{
+        type: Array,
+        required:true
     }
+
 },{
     timestamps:true
 })

@@ -1,20 +1,28 @@
 {
   "name": "growpos-desktop",
+  "productName":"Growpos",
   "version": "0.0.1",
   "author": "spiderwave",
   "description": "pos billing app",
   "main": "index.js",
   "homepage": "./",
   "build": {
-    "extraFiles": [
-      {
-        "from": "C:/demo",
-        "to": "Resources/bin",
-        "filter": [
-          "**/*"
-        ]
-      }
-    ]
+    "appId": "cool-app",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "src/icon.ico",
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "uninstallDisplayName": "Growpos Desktop",
+      "license": "license.txt",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "dependencies": {
     "base-64": "^0.1.0",
@@ -22,7 +30,6 @@
     "cors": "^2.8.5",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
-    "electron-builder": "^22.9.1",
     "electron-is-dev": "^1.2.0",
     "electron-pos-printer": "^1.2.4",
     "electron-serve": "^1.1.0",
@@ -49,7 +56,8 @@
     "build": "electron-packager . Growpos --appVersion=1.0.0 --buildVersion=2.0.0 --platform win32 --arch x64 --overwrite --icon ./assets/favicon.ico  --prune=true --asar --out dist/",
     "setup": "electron-installer-windows --src dist/app-win32-x64/ --dest dist/installers/",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "build-installer": "electron-builder"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.54",
