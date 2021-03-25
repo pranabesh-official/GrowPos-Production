@@ -1,20 +1,37 @@
 {
   "name": "growpos-desktop",
   "productName": "Growpos",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "spiderwave",
   "description": "pos billing app",
   "main": "index.js",
   "homepage": "./",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spiderwave/GrowPos-Production"
+  },
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
+  },
   "build": {
+    "productName": "Grow Pos Desktop",
     "appId": "growpos-desktop",
-    "extraResources": ["./extraResources/**"],
+    "extraResources": [
+      "./extraResources/**"
+    ],
+    "files": [
+      "dist/electron/**/*"
+    ],
     "win": {
       "target": [
         "nsis"
       ],
       "icon": "assets/icon.ico",
-      "requestedExecutionLevel": "requireAdministrator"
+      "requestedExecutionLevel": "requireAdministrator",
+      "publish": [
+        "github"
+      ]
     },
     "nsis": {
       "installerIcon": "assets/icon.ico",
@@ -35,6 +52,7 @@
     "electron-pos-printer": "^1.2.4",
     "electron-serve": "^1.1.0",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-updater": "^4.3.8",
     "express": "^4.17.1",
     "generate-serial-number": "0.0.3",
     "hammerjs": "^2.0.8",
@@ -46,9 +64,9 @@
     "prop-types": "^15.7.2",
     "serve": "^11.3.2",
     "shelljs": "^0.7.7",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.1",
     "socket.io-client": "^2.3.0",
-    "uaup-js": "0.0.21",
+    "uaup-js": "0.0.22",
     "uuid": "^8.3.0",
     "validator": "^13.1.17"
   },
