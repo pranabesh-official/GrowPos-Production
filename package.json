@@ -8,7 +8,7 @@
   "homepage": "./",
   "repository": {
     "type": "git",
-    "url": "https://github.com/spiderwave/GrowPos-Production"
+    "url": "https://github.com/spiderwave/GrowPos-Production.git"
   },
   "publish": {
     "provider": "github",
@@ -19,9 +19,6 @@
     "appId": "growpos-desktop",
     "extraResources": [
       "./extraResources/**"
-    ],
-    "files": [
-      "dist/electron/**/*"
     ],
     "win": {
       "target": [
@@ -43,6 +40,7 @@
     }
   },
   "dependencies": {
+    "asar": "^3.0.3",
     "base-64": "^0.1.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",

@@ -9,29 +9,29 @@ const express = require("express");
 const userInterface = express();
 const fs = require("fs");
 const isDev = require("electron-is-dev");
-const { autoUpdater } = require("electron-updater");
-// const NativeImage = require('electron').nativeImage;
-// require('dotenv').config()
+// const { autoUpdater } = require("electron-updater");
+const NativeImage = require('electron').nativeImage;
+require('dotenv').config()
 
 const logTag = "[NOSQLCLIENT]";
 let mongoProcess, nodeProcess;
 let startNodeServer = 0;
 
-autoUpdater.on("update-not-available", (info) => {
-  console.log(info);
-});
+// autoUpdater.on("update-not-available", (info) => {
+//   console.log(info);
+// });
 
-autoUpdater.on("update-available", (info) => {
-  console.log(info);
-});
+// autoUpdater.on("update-available", (info) => {
+//   console.log(info);
+// });
 
-autoUpdater.on("download-progress", (progressObj) => {
-  console.log(info);
-});
+// autoUpdater.on("download-progress", (progressObj) => {
+//   console.log(info);
+// });
 
-autoUpdater.on("update-downloaded", (info) => {
-  console.log(info);
-});
+// autoUpdater.on("update-downloaded", (info) => {
+//   console.log(info);
+// });
 
 const createWindow = function () {
   console.log(logTag, "trying to start Nosqlclient electron application");
@@ -249,9 +249,9 @@ const loadWindow = function (appPort, loadingWin, appRoot) {
   });
 };
 
-app.on("ready", function () {
-  autoUpdater.checkForUpdatesAndNotify();
-});
+// app.on("ready", function () {
+//   autoUpdater.checkForUpdatesAndNotify();
+// });
 // app.on('ready', createWindow);
 app.on("ready", async () => {
   let main = null;
